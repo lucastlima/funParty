@@ -5,6 +5,8 @@ import { initQuizSession } from "../../store/actions";
 import * as Yup from "yup";
 import { v4 as uuid } from "uuid";
 import { useDispatch } from "react-redux";
+import { setModal } from "../../store/actions";
+import { history } from "../../utils/history";
 
 const schema = Yup.object().shape({
   roomName: Yup.string().required("Required"),
@@ -29,9 +31,10 @@ function NewGame() {
       }}
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
-        console.log(values);
         await dispatch(initQuizSession(values));
         setSubmitting(false);
+        dispatch(setModal("quizNewGame"));
+        history.push(`/quiz/${values.id}`);
       }}
     >
       {({ isSubmitting }) => (

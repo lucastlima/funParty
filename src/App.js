@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initAuthListener } from "./store/actions";
 import Layout from "./components/Layout";
 import Quiz from "./games/Quiz/Quiz";
-import NewGame from "./games/Quiz/NewGame";
+import QuizRoom from "./games/Quiz/QuizRoom";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/quiz" component={Quiz} />
+        <Route exact path="/quiz/:id" component={QuizRoom} />
         <Redirect to="/" />
       </Switch>
     </Layout>

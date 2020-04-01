@@ -66,12 +66,14 @@ export const StyledQuiz = styled.div`
   flex: 1;
   justify-content: center;
   align-items: center;
-  /* color: white; */
+
+  h1 {
+    color: white;
+  }
 
   .menu {
     display: flex;
     justify-content: space-around;
-    color: black;
     width: 30rem;
     padding: 2rem;
     font-size: 1.4rem;
@@ -84,4 +86,12 @@ export const StyledQuiz = styled.div`
       }
     }
   }
+`;
+
+export const StyledRoomList = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+  width: 30rem;
 `;

@@ -1,5 +1,6 @@
 import { database } from "../../firebase/firebase";
 import axios from "axios";
+import { SET_QUIZROOMSLIST } from "../actionTypes";
 
 export const initQuizSession = config => async (dispatch, getState) => {
   try {
@@ -33,4 +34,18 @@ export const initQuizSession = config => async (dispatch, getState) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const setRoomsList = list => ({
+  type: SET_QUIZROOMSLIST,
+  list
+});
+
+export const initRoomsListener = () => (dispatch, getState) => {
+  const roomsListRef = database.ref("quiz/sessions");
+  roomsListRef.on("value", snap => {
+    const dataObj = snap.val();
+    dispatch(setRoomsList(Object.values(dataObj)));
+  });
+  return roomsListRef;
 };

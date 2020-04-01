@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { StyledQuiz, UIWrapper } from "../../style/styledComponents";
+import React, { useEffect } from "react";
+import {
+  StyledQuiz,
+  UIWrapper,
+  StyledRoomList
+} from "../../style/styledComponents";
 import Modal from "../../components/Modal";
 import JoinGame from "./JoinGame";
 import NewGame from "./NewGame";
-import { database } from "../../firebase/firebase";
+import { useDispatch, useSelector } from "react-redux";
+import { setModal, initRoomsListener } from "../../store/actions";
 
 function Quiz() {
-  const [joinGameModal, setJoinGameModal] = useState(false);
-  const [newGameModal, setnewGameModal] = useState(false);
-  const [list, setList] = useState([]);
+  const dispatch = useDispatch();
+  const { quizJoinGame, quizNewGame } = useSelector(({ ui }) => ui.modal);
+  const { roomsList } = useSelector(({ quiz }) => quiz);
 
   const handleJoinGame = () => {
-    setJoinGameModal(!joinGameModal);
+    dispatch(setModal("quizJoinGame"));
   };
   const handleNewGame = () => {
-    setnewGameModal(!newGameModal);
+    dispatch(setModal("quizNewGame"));
   };
 
   useEffect(() => {
-    const roomsListRef = database.ref("quiz/sessions");
-    roomsListRef.once("value", snap => {
-      const dataObj = snap.val();
-      setList(Object.values(dataObj));
-    });
-  }, []);
+    const roomsListener = dispatch(initRoomsListener());
+    return () => roomsListener.off();
+  }, [dispatch]);
 
-  console.log(list);
+  useEffect(() => {
+    const handleDisconnet = e => {
+      console.log(e);
+    };
+    window.onbeforeunload = handleDisconnet;
+  }, []);
 
   return (
     <StyledQuiz>
@@ -36,21 +43,23 @@ function Quiz() {
           <h4 onClick={handleJoinGame}>JOIN ROOM</h4>
         </div>
       </UIWrapper>
-      <UIWrapper padding="2rem">
-        <h2>Games</h2>
-        {list.map((item, i) => (
-          <div key={i}>
-            <h1>{item.roomName}</h1>
-          </div>
-        ))}
+      <UIWrapper>
+        <StyledRoomList>
+          <h2>Active Rooms:</h2>
+          {roomsList.map((item, i) => (
+            <div key={i}>
+              <h2>{item.roomName}</h2>
+            </div>
+          ))}
+        </StyledRoomList>
       </UIWrapper>
-      {joinGameModal && (
-        <Modal openState={joinGameModal} handleClose={handleJoinGame}>
+      {quizJoinGame && (
+        <Modal openState={quizJoinGame} handleClose={handleJoinGame}>
           <JoinGame />
         </Modal>
       )}
-      {newGameModal && (
-        <Modal openState={newGameModal} handleClose={handleNewGame}>
+      {quizNewGame && (
+        <Modal openState={quizNewGame} handleClose={handleNewGame}>
           <NewGame />
         </Modal>
       )}

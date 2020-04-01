@@ -5,4 +5,5 @@ export {
   userSignIn
 } from "./auth.actions";
 
-export { initQuizSession } from "./quiz.actions";
+export { initQuizSession, initRoomsListener } from "./quiz.actions";
+export { setModal } from "./ui.actions";
