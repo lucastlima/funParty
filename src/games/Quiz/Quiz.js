@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import {
   StyledQuiz,
   UIWrapper,
-  StyledRoomList
+  StyledRoomList,
+  StyledNavLink
 } from "../../style/styledComponents";
 import Modal from "../../components/Modal";
 import JoinGame from "./JoinGame";
@@ -47,9 +48,9 @@ function Quiz() {
         <StyledRoomList>
           <h2>Active Rooms:</h2>
           {roomsList.map((item, i) => (
-            <div key={i}>
+            <StyledNavLink key={i} to={`quiz/${item.id}`}>
               <h2>{item.roomName}</h2>
-            </div>
+            </StyledNavLink>
           ))}
         </StyledRoomList>
       </UIWrapper>

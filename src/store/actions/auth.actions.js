@@ -14,7 +14,6 @@ export const createUserDocument = async (userAuth, additionalData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapshot = await userRef.get();
   if (!snapshot.exists) {
-    console.log(snapshot);
     const createdAt = new Date();
     try {
       await userRef.set({
@@ -22,9 +21,7 @@ export const createUserDocument = async (userAuth, additionalData) => {
         email: userAuth.email,
         emailVerified: userAuth.emailVerified,
         photoURL: userAuth.photoURL,
-        isAnonymous: userAuth.isAnonymous,
         uid: userAuth.uid,
-        providerData: userAuth.providerData,
         createdAt,
         ...additionalData
       });
@@ -41,7 +38,7 @@ export const initAuthListener = () => async (dispatch, getState) => {
   try {
     const unsubscribe = firebase.auth().onAuthStateChanged(async userAuth => {
       if (userAuth) {
-        const userRef = await createUserDocument(userAuth);
+        const userRef = firestore.doc(`users/${userAuth.uid}`);
         userRef.onSnapshot(snapshot => {
           dispatch({ type: SET_USER, user: snapshot.data() });
           setLocalStorage(getState());
@@ -57,11 +54,16 @@ export const initAuthListener = () => async (dispatch, getState) => {
   }
 };
 
-export const userSignUp = user => async (dispatch, getState) => {
+export const userSignUp = userInfo => async (dispatch, getState) => {
   try {
-    await firebase
+    const { user } = await firebase
       .auth()
-      .createUserWithEmailAndPassword(user.email, user.password);
+      .createUserWithEmailAndPassword(userInfo.email, userInfo.password);
+
+    await createUserDocument(user, {
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName
+    });
   } catch (error) {
     console.log(error.code, error.message);
   }

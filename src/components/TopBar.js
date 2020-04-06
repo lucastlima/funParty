@@ -1,16 +1,17 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { userSignOut } from "../store/actions";
 import { useDispatch } from "react-redux";
+import { StyledNavLink } from "../style/styledComponents";
 
 const StyledTopBar = styled.div`
   display: flex;
-  height: 4rem;
+  min-height: 4rem;
   width: 100%;
   background-color: white;
   align-items: center;
   padding: 0.5rem 1rem;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   #signout {
     cursor: pointer;
@@ -21,6 +22,9 @@ function TopBar() {
   const dispatch = useDispatch();
   return (
     <StyledTopBar>
+      <StyledNavLink to="/">
+        <h2>Home</h2>
+      </StyledNavLink>
       <span id="signout" onClick={() => dispatch(userSignOut())}>
         SignOut
       </span>

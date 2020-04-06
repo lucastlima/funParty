@@ -26,6 +26,7 @@ const StyledHome = styled.div`
   justify-content: center;
   align-content: center;
   flex: 1;
+  overflow-y: auto;
 `;
 
 function Home() {
@@ -66,13 +67,11 @@ function Home() {
   return (
     <StyledHome>
       {apps.map((app, i) => (
-        <UIWrapper key={i}>
-          <StyledNavLink to={app.path}>
-            <AppWrapper>
-              <h1 className={app.className}>{app.name}</h1>
-            </AppWrapper>
-          </StyledNavLink>
-        </UIWrapper>
+        <StyledNavLink className="ui-wrapper" key={i} to={app.path}>
+          <AppWrapper>
+            <h1 className={app.className}>{app.name}</h1>
+          </AppWrapper>
+        </StyledNavLink>
       ))}
     </StyledHome>
   );

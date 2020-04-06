@@ -11,7 +11,7 @@ import QuizRoom from "./games/Quiz/QuizRoom";
 
 function App() {
   const dispatch = useDispatch();
-  const auth = useSelector(({ auth }) => auth.user);
+  const auth = useSelector(({ auth }) => auth.userAuth);
 
   useEffect(() => {
     const unsubscribe = dispatch(initAuthListener());

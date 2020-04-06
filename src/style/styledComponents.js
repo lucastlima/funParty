@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { Form } from "formik";
 import { NavLink } from "react-router-dom";
 
@@ -25,6 +25,8 @@ export const StyledForm = styled(Form)`
 // UI Elements
 
 export const UIWrapper = styled.div`
+  display: flex;
+  flex: ${({ flex }) => (flex ? flex : null)};
   border-radius: 2rem;
   box-shadow: 0 0.6rem 0 0 rgba(0, 0, 0, 0.3), 0 1rem 2rem rgba(0, 0, 0, 0.24);
   background-color: white;
