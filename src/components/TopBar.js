@@ -22,7 +22,7 @@ function TopBar() {
   const dispatch = useDispatch();
   return (
     <StyledTopBar>
-      <StyledNavLink to="/">
+      <StyledNavLink to="/quiz">
         <h2>Home</h2>
       </StyledNavLink>
       <span id="signout" onClick={() => dispatch(userSignOut())}>

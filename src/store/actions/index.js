@@ -2,13 +2,17 @@ export {
   initAuthListener,
   userSignUp,
   userSignOut,
-  userSignIn
+  userSignIn,
 } from "./auth.actions";
 
 export {
   initQuizSession,
   initRoomsListener,
   setQuizCurrentSession,
-  sendMessage
+  sendMessage,
+  leaveQuizRoom,
+  joinQuizRoom,
+  submitAnswer,
+  nextQuestion,
 } from "./quiz.actions";
 export { setModal } from "./ui.actions";

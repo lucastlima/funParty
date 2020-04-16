@@ -12,6 +12,7 @@ const StyledApp = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   flex: 1;
+  overflow: auto;
 `;
 
 function Layout({ children }) {

@@ -15,7 +15,7 @@ const schema = Yup.object().shape({
     .moreThan(1, "Min 1 question")
     .lessThan(50, "Max 50 questions")
     .required("Required"),
-  type: Yup.string().required("Required")
+  type: Yup.string().required("Required"),
 });
 
 function NewGame() {
@@ -27,7 +27,9 @@ function NewGame() {
         roomName: "",
         id: uuid(),
         amount: "10",
-        type: "multiple"
+        type: "multiple",
+        public: true,
+        joinable: true,
       }}
       validationSchema={schema}
       onSubmit={async (values, { setSubmitting }) => {
@@ -51,12 +53,12 @@ function NewGame() {
               name="amount"
             />
             <ErrorMessage name="amount" component="div" />
-            <h3>Select Type:</h3>
-            <Field as="select" name="type">
-              <option value="multiple">Multiple Choice</option>
-              <option value="boolean">True or False</option>
+            <h3>Public:</h3>
+            <Field as="select" name="public">
+              <option value={true}>True</option>
+              <option value={false}>False</option>
             </Field>
-            <ErrorMessage name="type" component="div" />
+            <ErrorMessage name="public" component="div" />
             <button type="submit" disabled={isSubmitting}>
               Submit
             </button>

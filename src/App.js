@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import Login from "./components/Login";
-import Home from "./components/Home";
 import SignUp from "./components/SignUp";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,19 +13,15 @@ function App() {
   const auth = useSelector(({ auth }) => auth.userAuth);
 
   useEffect(() => {
-    const unsubscribe = dispatch(initAuthListener());
-    return () => {
-      unsubscribe();
-    };
+    dispatch(initAuthListener());
   }, [dispatch]);
 
   return auth ? (
     <Layout>
       <Switch>
-        <Route exact path="/" component={Home} />
         <Route exact path="/quiz" component={Quiz} />
         <Route exact path="/quiz/:id" component={QuizRoom} />
-        <Redirect to="/" />
+        <Redirect to="/quiz" />
       </Switch>
     </Layout>
   ) : (

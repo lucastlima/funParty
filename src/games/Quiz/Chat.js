@@ -38,28 +38,27 @@ function Chat() {
   const dispatch = useDispatch();
   const chatBoxRef = React.createRef();
   const user = useSelector(({ auth }) => auth.userAuth);
-  const { chat, id, players } = useSelector(({ quiz }) => quiz.currentSession);
+  const { chat, id } = useSelector(({ quiz }) => quiz.currentSession);
 
   useEffect(() => {
     const chatbox = chatBoxRef.current;
     chatbox.scrollTop = chatbox.scrollHeight;
-    console.log("test");
   }, [chat, chatBoxRef]);
 
   const returnChatMessages = () => {
     if (chat) {
       return Object.values(chat)
         .sort((a, b) => a.timestamp - b.timestamp)
-        .map(m => (
-          <div key={m.msgId}>
-            <p>
-              <b>{`${players[m.userId].firstName} ${
-                players[m.userId].lastName
-              } says:`}</b>
-            </p>
-            <span>{m.message}</span>
-          </div>
-        ));
+        .map(m => {
+          return (
+            <div key={m.msgId}>
+              <p>
+                <b>{`${m.userName} says:`}</b>
+              </p>
+              <span>{m.message}</span>
+            </div>
+          );
+        });
     } else {
       return null;
     }
@@ -74,7 +73,7 @@ function Chat() {
         initialValues={{
           message: "",
           msgId: uuid(),
-          userId: user.uid,
+          userName: `${user.firstName} ${user.lastName}`,
           timestamp: new Date().valueOf()
         }}
         onSubmit={async (values, { setSubmitting }) => {

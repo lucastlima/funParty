@@ -72,22 +72,6 @@ export const StyledQuiz = styled.div`
   h1 {
     color: white;
   }
-
-  .menu {
-    display: flex;
-    justify-content: space-around;
-    width: 30rem;
-    padding: 2rem;
-    font-size: 1.4rem;
-
-    h4 {
-      cursor: pointer;
-      transition: transform 0.1s ease-in;
-      &:hover {
-        transform: scale(1.1);
-      }
-    }
-  }
 `;
 
 export const StyledRoomList = styled.div`
@@ -95,5 +79,6 @@ export const StyledRoomList = styled.div`
   flex-direction: column;
   text-align: center;
   padding: 2rem;
-  width: 30rem;
+  width: 100%;
+  max-width: 30rem;
 `;
